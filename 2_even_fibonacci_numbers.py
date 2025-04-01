@@ -22,7 +22,7 @@ def Solution(limit: int) -> int:
         if x % 2 == 0:
             total += x
 
-        # Remove the lower of the towo values
+        # Remove the lower of the two values
         previous_two_terms.pop(0)
         # Add the new term
         previous_two_terms.append(x)
