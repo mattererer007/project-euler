@@ -1,0 +1,41 @@
+import math
+
+"""
+Find the thirteen adjacent digits in the 1000-digit number that have the greatest product. What is the value of this product?
+
+"""
+
+# Should be able to iterate through it once and calculate each 13 adjacent items once
+# return the max
+
+# O(n) solution as no set of numbers is looked at more than once
+class Solution:
+    def LargestProduct(self, digits: int) -> int:
+
+        # covnvert integer into a string to then create a list of integers from
+        digit_list = [int(d) for d in str(digits)]
+
+        # set slideing range (0...12)
+        p = 12
+        # set max product
+        max_product = 0
+
+        # iterate through list while p < given digit length (i.e., 1000)
+        while p < len(digit_list):
+            product = digit_list[p]*digit_list[p-1]*digit_list[p-2]*digit_list[p-3]*digit_list[p-4]*digit_list[p-5]*digit_list[p-6]*digit_list[p-7]*digit_list[p-8]*digit_list[p-9]*digit_list[p-10]*digit_list[p-11]*digit_list[p-12]
+
+            # check each product for the max
+            if product > max_product:
+                max_product = product
+
+            p += 1
+
+        return max_product
+
+if __name__ == "__main__":
+    
+    digit = 7316717653133062491922511967442657474235534919493496983520312774506326239578318016984801869478851843858615607891129494954595017379583319528532088055111254069874715852386305071569329096329522744304355766896648950445244523161731856403098711121722383113622298934233803081353362766142828064444866452387493035890729629049156044077239071381051585930796086670172427121883998797908792274921901699720888093776657273330010533678812202354218097512545405947522435258490771167055601360483958644670632441572215539753697817977846174064955149290862569321978468622482839722413756570560574902614079729686524145351004748216637048440319989000889524345065854122758866688116427171479924442928230863465674813919123162824586178664583591245665294765456828489128831426076900422421902267105562632111110937054421750694165896040807198403850962455444362981230987879927244284909188845801561660979191338754992005240636899125607176060588611646710940507754100225698315520005593572972571636269561882670428252483600823257530420752963450
+
+    solution = Solution()
+
+    print(solution.LargestProduct(digit))
