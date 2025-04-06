@@ -14,7 +14,7 @@ Should realistically be able to iterate through grid once per each approach
 
 
 class Solution:
-    def largestProduct(self, grid: list[list]) -> int:
+    def largestProduct(self, grid: list[list[int]]) -> int:
 
         max_product = 0
 
@@ -41,16 +41,94 @@ class Solution:
 
         # Iterate left diagonally
         ## Start in top right corner and iterate down and to the left
-
         ### row 0, col 16 [0,16], [1,17] [2,18] [3,19]
         ### row 0, col col 15 [0,15] [1,16] [2,17] [3,18] >> [1,16] [2,17] [3,18] [4,19]
+        current = number_of_columns - 4
+        tail_r, tail_c = 0, current
 
-        # c = number_of_columns -1
-        # while c > 0:
-            
+        while current >= 0:
 
+            product = grid[tail_r][tail_c]* grid[tail_r+1][tail_c+1]* grid[tail_r+2][tail_c+2]* grid[tail_r+3][tail_c+3]
+            max_product = max(max_product, product)
+
+            if tail_c+3 == number_of_columns - 1:
+                current -= 1
+                tail_r, tail_c = 0, current
+            else:
+                tail_r += 1
+                tail_c += 1
+
+        current = number_of_columns - 4
+        tail_r, tail_c = current, 0
+
+        while current > 0:
+            product = grid[tail_r][tail_c]* grid[tail_r+1][tail_c+1]* grid[tail_r+2][tail_c+2]* grid[tail_r+3][tail_c+3]
+            max_product = max(max_product, product)
+
+            if tail_r+3 == number_of_rows - 1:
+                current -= 1
+                tail_r, tail_c = current, 0
+            else:
+                tail_r += 1
+                tail_c += 1
+
+        # Iterate right diadonally
+        ## Start in top left corner and iterate down to the right
+        ### row 0, col 3 [0,3], [1,2] [2,1] [3,0]
+        current = 3
+        tail_r, tail_c = 0, current
+
+        while current < number_of_columns:
+            product = grid[tail_r][tail_c]* grid[tail_r+1][tail_c-1]* grid[tail_r+2][tail_c-2]* grid[tail_r+3][tail_c-3]
+            max_product = max(max_product, product)
+
+            if tail_r+3 == number_of_rows - 1:
+                current += 1
+                tail_r, tail_c = 0, current
+            else:
+                tail_r += 1
+                tail_c -= 1
+
+           
+        return max_product
+
+# A consolidation of the above
+# O(n^2) with the double loops
+# 4 constant actions potentially take place at each cell
+class Solution2:
+    def largestProduct(self, grid: list[list[int]]) -> int:
+
+        max_product = 0
+
+        number_of_rows = len(grid)
+        number_of_columns = len(grid[0])
+
+        for r in range(0, number_of_rows):
+            for c in range(0,number_of_columns):
+                # Left to right
+                ## Check if the right most value is out of range
+                if c+3 < number_of_columns:
+                    product = grid[r][c] * grid[r][c+1] * grid[r][c+2] * grid[r][c+3]
+                    max_product = max(max_product, product)
+                # Up and down
+                ## Check if the lowest value is out of range
+                if r+3 < number_of_rows:
+                    product = grid[r][c] * grid[r+1][c] * grid[r+2][c] * grid[r+3][c]
+                    max_product = max(max_product, product)
+                # Left and diagonally
+                ## Check if the cell has at least 3 rows and 3 columns below it to the left
+                if r+3 < number_of_rows and c+3 < number_of_columns:
+                    product = grid[r][c]* grid[r+1][c+1]* grid[r+2][c+2]* grid[r+3][c+3]
+                    max_product = max(max_product, product)
+                # Right and diagonally
+                ## Check if the cell has at least 3 rows and 3 columns below it to the right
+                if r+3 < number_of_rows and c-3 >= 0:
+                    product = grid[r][c]* grid[r+1][c-1]* grid[r+2][c-2]* grid[r+3][c-3]
+                    max_product = max(max_product, product)
 
         return max_product
+
+                
 
 
 if __name__ == "__main__":
@@ -78,8 +156,8 @@ if __name__ == "__main__":
 
     grid = [[int(num) for num in line.split()] for line in input.strip().split('\n')]
 
-    solution = Solution()
+
+    solution = Solution2()
 
     print(solution.largestProduct(grid))
-
 
