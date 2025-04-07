@@ -14,7 +14,7 @@ What is the 10001st prime number?
 # (3) Iterate through to the 10001 prime number >> return
 
 
-
+# run time approximately (and pessimistically) O(n^2) to accomodate iterating over the list multiple times  
 class Solution:
     def FindPrimeNumber(self, target: int) -> int:
         
