@@ -8,9 +8,10 @@ NOTE: Do not count spaces or hyphens. For example,
 (three hundred and forty-two) contains 23 letters and (one hundred and fifteen) contains 20 letters. The use of "and" when writing out numbers is in compliance with British usage.
 
 """
-
+# O(n) time complexity where n is the list of numbers to iterate through with O(1) space complexity discounting the different dictionaries in class
 class Solution:
 
+    # Dictionaries storing all items needed to convert words to the letter form of themselves
     thousands = "thousand"
     hundreds = "hundred"
     tens = {2: "twenty", 3: "thirty", 4: "forty", 5: "fifty", 6: "sixty", 7: "seventy", 8: "eighty", 9: "ninety"}
@@ -21,15 +22,16 @@ class Solution:
 
         total_count = 0
 
+        # Iterate through each number and convert it before measuring it
         for x in range(low_num, high_num + 1):
             letter_number = self.numberfier(x)
             total_count += len(letter_number)
-            print(letter_number, len(letter_number), total_count)
+            # print(letter_number, len(letter_number), total_count)
 
         return total_count
             
 
-        
+    # Starting from checking whether 'and' is necessary, start from the 1000s place and go down
     def numberfier(self, x: int) -> str:
 
         letter_number = ""
