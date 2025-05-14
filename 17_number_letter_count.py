@@ -40,7 +40,7 @@ class Solution:
         # hundreds, tens, or ones place...add 'and'
         if x // 1000 > 0 and (x % 1000 > 0):
             letter_number += "and"
-        # Else if the nunber is in the hundreds and there are numbers in the tens or ones > 0
+        # Else if the number is in the hundreds and there are numbers in the tens or ones > 0
         # ...add 'and'
         elif x // 100 > 0 and (x % 100 > 0):
             letter_number += "and"
